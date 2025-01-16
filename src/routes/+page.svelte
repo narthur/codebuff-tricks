@@ -1,5 +1,18 @@
 <script lang="ts">
 	import type { PackageManager, Framework, SetupConfig, DeploymentPlatform } from '$lib/types';
+	import Prism from 'prismjs';
+	import 'prismjs/components/prism-bash';
+
+	// Remove any default Prism background
+	const style = document.createElement('style');
+	style.textContent = `
+		code[class*="language-"],
+		pre[class*="language-"] {
+			background: none;
+		}
+	`;
+	document.head.appendChild(style);
+
 	import { fade } from 'svelte/transition';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
@@ -317,9 +330,15 @@
 				</div>
 			</div>
 		{:else}
-			<div in:fade>
+			<div in:fade
+				on:introend={() => {
+					if (typeof window !== 'undefined') {
+						Prism.highlightAll();
+					}
+				}}
+			>
 				<h2 class="mb-4 text-lg font-semibold">Setup Instructions</h2>
-				<div class="relative rounded-lg bg-gray-900 p-4 text-gray-100">
+				<div class="relative rounded-lg bg-gray-900 p-4 text-gray-100 [&_.token.comment]:text-gray-400 [&_.token.function]:text-blue-400 [&_.token.operator]:text-gray-300 [&_.token.punctuation]:text-gray-300 [&_.token.string]:text-emerald-300 [&_.token.command]:text-blue-300">
 					<button
 						on:click={() => {
 							const text = getSetupInstructions().join('\n');
@@ -329,9 +348,7 @@
 					>
 						Copy
 					</button>
-					<pre class="whitespace-pre-wrap font-mono text-sm">{getSetupInstructions().join(
-							'\n'
-						)}</pre>
+					<pre class="whitespace-pre-wrap font-mono text-sm"><code class="language-bash">{getSetupInstructions().join('\n')}</code></pre>
 				</div>
 				<div class="mt-4 space-y-4">
 					<div class="flex items-center justify-between">
