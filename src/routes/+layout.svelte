@@ -10,8 +10,7 @@
 
 <div class="relative">
 	<button
-		class="fixed right-4 top-4 rounded-full p-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
-		on:click={toggleTheme}
+		class="fixed right-4 top-4 rounded-full p-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"    onclick={toggleTheme}
 		aria-label="Toggle dark mode"
 	>
 		{#if $theme === 'dark'}
