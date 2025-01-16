@@ -207,14 +207,40 @@
     {:else}
 			<div in:fade>
 				<h2 class="mb-4 text-lg font-semibold">Setup Instructions</h2>
-				<div class="rounded-lg bg-gray-900 p-4 text-gray-100">
-					<pre class="whitespace-pre-wrap font-mono text-sm">{getSetupInstructions().join(
-							'\n'
-						)}</pre>
+				<div class="rounded-lg bg-gray-900 p-4 text-gray-100 relative">
+					<button
+						on:click={() => {
+							const text = getSetupInstructions().join('\n');
+							navigator.clipboard.writeText(text);
+						}}
+						class="absolute top-2 right-2 px-2 py-1 text-xs bg-gray-700 hover:bg-gray-600 rounded"
+					>
+						Copy
+					</button>
+					<pre class="whitespace-pre-wrap font-mono text-sm">{getSetupInstructions().join('\n')}</pre>
 				</div>
-				<p class="mt-4 text-sm text-gray-600">
-					Copy these commands to set up your new project with Codebuff!
-				</p>
+				<div class="mt-4 flex justify-between items-center">
+					<p class="text-sm text-gray-600">
+						Copy these commands to set up your new project with Codebuff!
+					</p>
+					<button
+						on:click={() => {
+							const text = getSetupInstructions().join('\n');
+							const blob = new Blob([text], { type: 'text/plain' });
+							const url = URL.createObjectURL(blob);
+							const a = document.createElement('a');
+							a.href = url;
+							a.download = 'setup-project.sh';
+							document.body.appendChild(a);
+							a.click();
+							document.body.removeChild(a);
+							URL.revokeObjectURL(url);
+						}}
+						class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+					>
+						Download Script
+					</button>
+				</div>
 			</div>
 		{/if}
 
@@ -226,12 +252,14 @@
 			>
 				Previous
 			</button>
-			<button
-				on:click={nextStep}
-				class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"        disabled={currentStep === 4}
-			>
-				{currentStep === 2 ? 'Show Instructions' : 'Next'}
-			</button>
+			{#if currentStep < 4}
+				<button
+					on:click={nextStep}
+					class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+				>
+					{currentStep === 3 ? 'Show Instructions' : 'Next'}
+				</button>
+			{/if}
 		</div>
 	</div>
 </div>
