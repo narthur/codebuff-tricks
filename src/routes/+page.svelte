@@ -289,7 +289,7 @@
 		<div class="mt-8 flex justify-between">
 			<button
 				on:click={prevStep}
-				class="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+				class="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
 				disabled={currentStep === 0}
 			>
 				Previous
