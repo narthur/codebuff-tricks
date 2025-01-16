@@ -332,27 +332,55 @@
 							'\n'
 						)}</pre>
 				</div>
-				<div class="mt-4 flex items-center justify-between">
-					<p class="text-sm text-gray-600">
-						Copy these commands to set up your new project with Codebuff!
-					</p>
-					<button
-						on:click={() => {
-							const text = getSetupInstructions().join('\n');
-							const blob = new Blob([text], { type: 'text/plain' });
-							const url = URL.createObjectURL(blob);
-							const a = document.createElement('a');
-							a.href = url;
-							a.download = 'setup-project.sh';
-							document.body.appendChild(a);
-							a.click();
-							document.body.removeChild(a);
-							URL.revokeObjectURL(url);
-						}}
-						class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-					>
-						Download Script
-					</button>
+				<div class="mt-4 space-y-4">
+					<div class="flex items-center justify-between">
+						<p class="text-sm text-gray-600">
+							Copy these commands to set up your new project with Codebuff!
+						</p>
+						<button
+							on:click={() => {
+								const text = getSetupInstructions().join('\n');
+								const blob = new Blob([text], { type: 'text/plain' });
+								const url = URL.createObjectURL(blob);
+								const a = document.createElement('a');
+								a.href = url;
+								a.download = 'setup-project.sh';
+								document.body.appendChild(a);
+								a.click();
+								document.body.removeChild(a);
+								URL.revokeObjectURL(url);
+							}}
+							class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+						>
+							Download Script
+						</button>
+					</div>
+
+					<div class="rounded-lg border border-gray-200 p-4">
+						<p class="mb-3 text-sm text-gray-600">
+							Share these instructions with others:
+						</p>
+						<div class="flex items-center space-x-2">
+							<input
+								type="text"
+								readonly
+								value={window.location.href}
+								class="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-600"
+							/>
+							<button
+								on:click={() => {
+									navigator.clipboard.writeText(window.location.href);
+								}}
+								class="inline-flex items-center rounded-md bg-gray-50 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+							>
+								<svg class="mr-1.5 h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
+									<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>
+									<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>
+								</svg>
+								Copy URL
+							</button>
+						</div>
+					</div>
 				</div>
 				<div class="mt-6 border-t border-gray-200 pt-4">
 					<h3 class="text-sm font-medium text-gray-900">Found an issue with these instructions?</h3>
