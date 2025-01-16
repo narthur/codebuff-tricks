@@ -9,7 +9,7 @@
 		deployment: 'render'
 	};
 
-	const deploymentPlatforms: DeploymentPlatform[] = ['render', 'netlify'];
+	const deploymentPlatforms: DeploymentPlatform[] = ['vercel', 'netlify', 'render', 'cloudflare', 'github-pages'];
 
 	const packageManagers: PackageManager[] = ['npm', 'pnpm', 'yarn', 'bun'];
 	const frameworks: Framework[] = [
@@ -89,7 +89,14 @@
 			'git commit -m "Initial commit"',
 			'',
 			'# Deploy to ' + config.deployment,
-			...(config.deployment === 'render'
+			...(config.deployment === 'vercel'
+				? [
+						'# Install Vercel CLI',
+						`${config.packageManager} ${config.packageManager === 'npm' ? 'install -g' : 'add -g'} vercel`,
+						'# Deploy to Vercel',
+						'vercel'
+				]
+				: config.deployment === 'render'
 				? [
 						'# Visit render.com and create a new Web Service',
 						'# Connect your GitHub repository',
@@ -107,13 +114,35 @@
 									: 'npm run preview'),
 						'# Auto-deploy on git push'
 					]
-				: [
+				: config.deployment === 'netlify'
+				? [
 						'# Install Netlify CLI',
 						`${config.packageManager} ${config.packageManager === 'npm' ? 'install -g' : 'add -g'} netlify-cli`,
 						'# Initialize Netlify',
 						'netlify init',
 						'# Deploy to Netlify',
 						'netlify deploy --prod'
+					]
+				: config.deployment === 'cloudflare'
+				? [
+						'# Install Cloudflare Pages via Wrangler',
+						`${config.packageManager} ${config.packageManager === 'npm' ? 'install -g' : 'add -g'} wrangler`,
+						'# Login to Cloudflare',
+						'wrangler login',
+						'# Deploy to Cloudflare Pages',
+						'wrangler pages deploy dist'
+					]
+				: [
+						'# Configure GitHub Pages in your repository settings',
+						'# Add deploy script to package.json:',
+						'# "deploy": "gh-pages -d dist"',
+						'',
+						'# Install gh-pages package',
+						`${packageManager} ${packageManager === 'npm' ? 'install' : 'add'} -D gh-pages`,
+						'',
+						'# Build and deploy',
+						'npm run build',
+						'npm run deploy'
 					])
 		];
 	}
