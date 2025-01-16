@@ -114,13 +114,13 @@
 		<div class="mb-8">
 			<h1 class="mb-2 text-2xl font-bold text-gray-900">Project Setup Wizard</h1>
 			<div class="flex justify-between text-sm text-gray-500">
-				<span>Step {currentStep + 1} of 4</span>
-				<span>{Math.round(((currentStep + 1) / 4) * 100)}% complete</span>
+				<span>Step {currentStep + 1} of 5</span>
+				<span>{Math.round(((currentStep + 1) / 5) * 100)}% complete</span>
 			</div>
 			<div class="mt-2 h-2 w-full rounded-full bg-gray-200">
 				<div
 					class="h-2 rounded-full bg-blue-600 transition-all duration-300"
-					style="width: {((currentStep + 1) / 4) * 100}%"
+					style="width: {((currentStep + 1) / 5) * 100}%"
 				></div>
 			</div>
 		</div>
