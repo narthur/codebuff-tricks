@@ -369,7 +369,7 @@
 						</button>
 					</div>
 
-					<div class="rounded-lg border border-gray-200 p-4">
+					<div class="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
 						<p class="mb-3 text-sm text-gray-600 dark:text-gray-300">
 							Share these instructions with others:
 						</p>
@@ -395,7 +395,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="mt-6 border-t border-gray-200 pt-4">
+				<div class="mt-6 border-t border-gray-200 pt-4 dark:border-gray-700">
 					<h3 class="text-sm font-medium text-gray-900 dark:text-white">Found an issue with these instructions?</h3>
 					<div class="mt-3 flex space-x-4">
 						<a
@@ -426,7 +426,7 @@ Issue Description:
 							)}`}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700"
+							class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
 						>
 							<svg class="mr-2 h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
 								<path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z"/>
@@ -437,7 +437,7 @@ Issue Description:
 							href="https://github.com/narthur/codebuff-tricks/fork"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700"
+							class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
 						>
 							<svg class="mr-2 h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
 								<path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"/>
