@@ -313,6 +313,55 @@
 						Download Script
 					</button>
 				</div>
+				<div class="mt-6 border-t border-gray-200 pt-4">
+					<h3 class="text-sm font-medium text-gray-900">Found an issue with these instructions?</h3>
+					<div class="mt-3 flex space-x-4">
+						<a
+							href={`https://github.com/narthur/codebuff-tricks/issues/new?title=${encodeURIComponent(
+								`Setup instructions issue for ${config.framework} with ${config.packageManager}`
+							)}&body=${encodeURIComponent(
+								`I found an issue with the setup instructions for the following configuration:
+
+Configuration:
+- Package Manager: ${config.packageManager}
+- Framework: ${config.framework}
+- TypeScript: ${config.typescript ? 'Yes' : 'No'}
+- Deployment: ${config.deployment}
+
+Generated Commands:
+\`\`\`bash
+${getSetupInstructions().join('\n')}
+\`\`\`
+
+Issue Description:
+[Please describe the issue you found with these instructions]
+`
+							)}`}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700"
+						>
+							<svg class="mr-2 h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
+								<path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z"/>
+							</svg>
+							Report an issue
+						</a>
+						<a
+							href="https://github.com/narthur/codebuff-tricks/fork"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700"
+						>
+							<svg class="mr-2 h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
+								<path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"/>
+							</svg>
+							Fork and contribute
+						</a>
+					</div>
+					<p class="mt-2 text-xs text-gray-500">
+						Help us improve these instructions by reporting issues or submitting pull requests on GitHub.
+					</p>
+				</div>
 			</div>
 		{/if}
 
@@ -332,6 +381,39 @@
 					{currentStep === 3 ? 'Show Instructions' : 'Next'}
 				</button>
 			{/if}
+		</div>
+	</div>
+
+	<div class="mx-auto mt-12 max-w-3xl text-center">
+		<div class="rounded-lg bg-white p-6 shadow-sm">
+			<h2 class="mb-4 text-lg font-semibold text-gray-900">Support This Project</h2>
+			<p class="mb-6 text-gray-600">
+				If you found this tool helpful, you can support its development in these ways:
+			</p>
+			<div class="flex justify-center space-x-4">
+				<a
+					href="https://ko-fi.com/narthur"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center rounded-md bg-[#FF5E5B] px-4 py-2 text-sm font-medium text-white hover:bg-[#ff4542] focus:outline-none focus:ring-2 focus:ring-[#FF5E5B] focus:ring-offset-2"
+				>
+					<svg class="mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/>
+					</svg>
+					Buy me a coffee
+				</a>
+				<a
+					href="https://codebuff.com/referrals/ref-6d348d54-80f1-4155-903b-2cc6c57dd12f"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+				>
+					<svg class="mr-2 h-5 w-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M12 4L4 8l8 4 8-4-8-4zM4 12l8 4 8-4M4 16l8 4 8-4"/>
+					</svg>
+					Try Codebuff with my referral
+				</a>
+			</div>
 		</div>
 	</div>
 </div>
