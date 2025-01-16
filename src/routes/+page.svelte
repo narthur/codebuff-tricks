@@ -1,13 +1,14 @@
 <script lang="ts">
 	import type { PackageManager, Framework, SetupConfig } from '$lib/types';
-	import { fade } from 'svelte/transition';
+	import { fade } from 'svelte/transition';  let currentStep = 0;
+  let config: SetupConfig = {
+    packageManager: 'npm',
+    framework: 'react',
+    typescript: true,
+    deployment: 'render'
+  };
 
-	let currentStep = 0;
-	let config: SetupConfig = {
-		packageManager: 'npm',
-		framework: 'react',
-		typescript: true
-	};
+  const deploymentPlatforms: DeploymentPlatform[] = ['render', 'netlify'];
 
 	const packageManagers: PackageManager[] = ['npm', 'pnpm', 'yarn', 'bun'];
 	const frameworks: Framework[] = [
@@ -20,8 +21,7 @@
 		'sveltekit'
 	];
 
-	function nextStep() {
-		if (currentStep < 3) currentStep++;
+	function nextStep() {    if (currentStep < 4) currentStep++;
 	}
 
 	function prevStep() {
@@ -80,7 +80,31 @@
 			install,
 			'',
 			'# Start Codebuff in your project',
-			'codebuff'
+			'codebuff',
+			'',
+			'# Make initial commit',
+			'git add .',
+			'git commit -m "Initial commit"',
+			'',
+			'# Deploy to ' + config.deployment,
+			...(config.deployment === 'render' ? [
+				'# Visit render.com and create a new Web Service',
+				'# Connect your GitHub repository',
+				'# Build Command: ' + (config.framework === 'nextjs' ? 'npm run build' : 
+								  config.framework === 'sveltekit' ? 'npm run build' : 
+								  'npm run build'),
+				'# Start Command: ' + (config.framework === 'nextjs' ? 'npm start' :
+								  config.framework === 'sveltekit' ? 'node build' :
+								  'npm run preview'),
+				'# Auto-deploy on git push'
+			] : [
+				'# Install Netlify CLI',
+				`${config.packageManager} ${config.packageManager === 'npm' ? 'install -g' : 'add -g'} netlify-cli`,
+				'# Initialize Netlify',
+				'netlify init',
+				'# Deploy to Netlify',
+				'netlify deploy --prod'
+			])
 		];
 	}
 </script>
@@ -162,8 +186,25 @@
 						<span class="text-gray-900">No</span>
 					</label>
 				</div>
-			</div>
-		{:else}
+			</div>    {:else if currentStep === 3}
+      <div in:fade>
+        <h2 class="text-lg font-semibold mb-4">Choose your deployment platform</h2>
+        <div class="space-y-2">
+          {#each deploymentPlatforms as platform}
+            <label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50">
+              <input
+                type="radio"
+                name="deployment"
+                value={platform}
+                bind:group={config.deployment}
+                class="h-4 w-4 text-blue-600"
+              />
+              <span class="text-gray-900 capitalize">{platform}</span>
+            </label>
+          {/each}
+        </div>
+      </div>
+    {:else}
 			<div in:fade>
 				<h2 class="mb-4 text-lg font-semibold">Setup Instructions</h2>
 				<div class="rounded-lg bg-gray-900 p-4 text-gray-100">
@@ -187,8 +228,7 @@
 			</button>
 			<button
 				on:click={nextStep}
-				class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-				disabled={currentStep === 3}
+				class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"        disabled={currentStep === 4}
 			>
 				{currentStep === 2 ? 'Show Instructions' : 'Next'}
 			</button>
