@@ -1,0 +1,138 @@
+---
+const frameworks = [
+	{
+		name: 'Astro',
+		command: 'npm create astro@latest',
+		description: 'A modern static site builder with excellent performance and developer experience.',
+		steps: [
+			'Run the command in your terminal',
+			'Follow the CLI prompts to name your project and choose a template',
+			'Navigate to your project directory',
+			'Run npm install (or pnpm install, or yarn) to install dependencies',
+			'Start the development server with npm run dev'
+		]
+	},
+	{
+		name: 'SvelteKit',
+		command: 'npm create svelte@latest my-app',
+		description: 'The official application framework for Svelte, with powerful features out of the box.',
+		steps: [
+			'Run the command in your terminal',
+			'Follow the CLI prompts to configure your project',
+			'Navigate to your project directory',
+			'Run npm install (or pnpm install, or yarn) to install dependencies',
+			'Start the development server with npm run dev'
+		]
+	},
+	{
+		name: 'Vite',
+		command: 'npm create vite@latest',
+		description: 'A modern frontend build tool that offers a faster and leaner development experience.',
+		steps: [
+			'Run the command in your terminal',
+			'Choose a project name',
+			'Select your preferred framework',
+			'Choose a variant (JavaScript/TypeScript)',
+			'Navigate to your project directory',
+			'Run npm install (or pnpm install, or yarn) to install dependencies',
+			'Start the development server with npm run dev'
+		]
+	}
+];
+---
+
+<div class="container">
+	<h1>Codebuff Tricks</h1>
+	<p class="intro">
+		Quick guides to initialize new projects with popular frameworks. Choose your preferred stack and get
+		started in minutes.
+	</p>
+
+	<div class="tutorials">
+		{
+			frameworks.map((framework) => (
+				<article class="tutorial-card">
+					<h2>{framework.name}</h2>
+					<p>{framework.description}</p>
+					
+					<div class="command-block">
+						<pre><code>{framework.command}</code></pre>
+					</div>
+
+					<h3>Steps:</h3>
+					<ol>
+						{framework.steps.map((step) => (
+							<li>{step}</li>
+						))}
+					</ol>
+				</article>
+			))
+		}
+	</div>
+</div>
+
+<style>
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 2rem;
+	}
+
+	h1 {
+		font-size: 2.5rem;
+		margin-bottom: 1rem;
+		color: #2563eb;
+	}
+
+	.intro {
+		font-size: 1.2rem;
+		color: #4b5563;
+		margin-bottom: 3rem;
+	}
+
+	.tutorials {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2rem;
+	}
+
+	.tutorial-card {
+		background: white;
+		border-radius: 1rem;
+		padding: 2rem;
+		box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+	}
+
+	.tutorial-card h2 {
+		color: #2563eb;
+		margin-top: 0;
+	}
+
+	.command-block {
+		margin: 1.5rem 0;
+	}
+
+	.command-block pre {
+		margin: 0;
+		background-color: #1e293b;
+		color: #e2e8f0;
+	}
+
+	ol {
+		padding-left: 1.5rem;
+	}
+
+	li {
+		margin-bottom: 0.5rem;
+	}
+
+	@media (max-width: 768px) {
+		.container {
+			padding: 1rem;
+		}
+
+		h1 {
+			font-size: 2rem;
+		}
+	}
+</style>
