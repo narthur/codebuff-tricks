@@ -503,4 +503,23 @@ Issue Description:
 			</div>
 		</div>
 	</div>
+
+	<footer class="mx-auto mt-16 max-w-3xl px-4 pb-8 text-center text-sm text-gray-500 dark:text-gray-400">
+		<div class="space-x-4">
+			<a href="https://nathanarthur.com" class="hover:text-gray-700 dark:hover:text-gray-200">Nathan Arthur</a>
+			<span>•</span>
+			<a href="https://pinepeakdigital.com" class="hover:text-gray-700 dark:hover:text-gray-200">Pine Peak Digital</a>
+			<span>•</span>
+			<a href="https://ko-fi.com/narthur" class="hover:text-gray-700 dark:hover:text-gray-200">Ko-fi</a>
+			<span>•</span>
+			<a href="https://taskratchet.com" class="hover:text-gray-700 dark:hover:text-gray-200">TaskRatchet</a>
+			<span>•</span>
+			<a href="https://github.com/narthur/codebuff-tricks" class="hover:text-gray-700 dark:hover:text-gray-200">GitHub</a>
+			<span>•</span>
+			<a href="https://codebuff.com/referrals/ref-6d348d54-80f1-4155-903b-2cc6c57dd12f" class="hover:text-gray-700 dark:hover:text-gray-200">Try Codebuff</a>
+		</div>
+		<p class="mt-4">
+			Built by <a href="https://nathanarthur.com" class="hover:text-gray-700 dark:hover:text-gray-200">Nathan Arthur</a> at <a href="https://pinepeakdigital.com" class="hover:text-gray-700 dark:hover:text-gray-200">Pine Peak Digital</a>
+		</p>
+	</footer>
 </div>
