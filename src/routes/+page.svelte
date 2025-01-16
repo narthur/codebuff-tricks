@@ -13,8 +13,9 @@
 		deployment: 'render'
 	};
 
-	// Load state from URL on mount
+	// Load state from URL on mount (browser-only)
 	onMount(() => {
+		if (typeof window === 'undefined') return;
 		const params = new URLSearchParams($page.url.search);
 		const step = parseInt(params.get('step') || '0');
 		const pm = params.get('pm');
@@ -40,7 +41,7 @@
 	});
 
 	// Update URL when state changes
-	$: {
+	$: if (typeof window !== 'undefined') {
 		const params = new URLSearchParams();
 		params.set('step', currentStep.toString());
 		params.set('pm', config.packageManager);
