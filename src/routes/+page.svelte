@@ -19,7 +19,7 @@
 	// Load state from URL on mount (browser-only)
 	onMount(() => {
 		if (typeof window === 'undefined') return;
-		
+
 		// Remove any default Prism background
 		const style = document.createElement('style');
 		style.textContent = `
@@ -61,7 +61,7 @@
 		params.set('fw', config.framework);
 		params.set('ts', config.typescript.toString());
 		params.set('deploy', config.deployment);
-		goto(`?${params.toString()}`, { replaceState: true, keepfocus: true });
+		goto(`?${params.toString()}`, { replaceState: true, keepFocus: true });
 	}
 
 	const deploymentPlatforms: DeploymentPlatform[] = [
@@ -211,8 +211,14 @@
 
 <div class="min-h-screen bg-gray-100 px-4 py-8 dark:bg-gray-900 sm:px-6 lg:px-8">
 	<div class="mx-auto mb-12 max-w-3xl text-center">
-		<h1 class="mb-4 flex items-center justify-center text-4xl font-bold text-gray-900 dark:text-white">
-			Get Started with <img src="/codebuff-logo.svg" alt="Codebuff" class="ml-5 inline h-16 dark:invert dark:grayscale" />
+		<h1
+			class="mb-4 flex items-center justify-center text-4xl font-bold text-gray-900 dark:text-white"
+		>
+			Get Started with <img
+				src="/codebuff-logo.svg"
+				alt="Codebuff"
+				class="ml-5 inline h-16 dark:grayscale dark:invert"
+			/>
 		</h1>
 		<div class="mb-6">
 			<span
@@ -234,14 +240,18 @@
 		</p>
 	</div>
 
-	<div class="mx-auto max-w-md overflow-hidden rounded-xl bg-white p-6 shadow-md dark:bg-gray-800 dark:shadow-gray-900/30 md:max-w-2xl">
+	<div
+		class="mx-auto max-w-md overflow-hidden rounded-xl bg-white p-6 shadow-md dark:bg-gray-800 dark:shadow-gray-900/30 md:max-w-2xl"
+	>
 		<div class="mb-8">
 			<h2 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white">Project Setup</h2>
 			<div class="flex justify-between text-sm text-gray-500 dark:text-gray-400">
 				<span>Step {currentStep + 1} of 5</span>
 				<span>{Math.round(((currentStep + 1) / 5) * 100)}% complete</span>
-			</div>				<div class="mt-2 h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-					<div class="h-2 rounded-full bg-blue-600 transition-all duration-300 dark:bg-blue-500"
+			</div>
+			<div class="mt-2 h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
+				<div
+					class="h-2 rounded-full bg-blue-600 transition-all duration-300 dark:bg-blue-500"
 					style="width: {((currentStep + 1) / 5) * 100}%"
 				></div>
 			</div>
@@ -251,7 +261,10 @@
 			<div in:fade>
 				<h2 class="mb-4 text-lg font-semibold dark:text-white">Choose your package manager</h2>
 				<div class="space-y-2">
-					{#each packageManagers as pm}            <label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50 dark:hover:bg-gray-700">
+					{#each packageManagers as pm}
+						<label
+							class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50 dark:hover:bg-gray-700"
+						>
 							<input
 								type="radio"
 								name="packageManager"
@@ -269,7 +282,9 @@
 				<h2 class="mb-4 text-lg font-semibold dark:text-white">Choose your framework</h2>
 				<div class="space-y-2">
 					{#each frameworks as fw}
-						<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50 dark:hover:bg-gray-700">
+						<label
+							class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50 dark:hover:bg-gray-700"
+						>
 							<input
 								type="radio"
 								name="framework"
@@ -293,7 +308,7 @@
 							bind:group={config.typescript}
 							value={true}
 							class="h-4 w-4 text-blue-600"
-						/>							<span class="text-gray-900 dark:text-white">Yes</span>
+						/> <span class="text-gray-900 dark:text-white">Yes</span>
 					</label>
 					<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50">
 						<input
@@ -302,7 +317,7 @@
 							bind:group={config.typescript}
 							value={false}
 							class="h-4 w-4 text-blue-600"
-						/>							<span class="text-gray-900 dark:text-white">No</span>
+						/> <span class="text-gray-900 dark:text-white">No</span>
 					</label>
 				</div>
 			</div>
@@ -311,7 +326,9 @@
 				<h2 class="mb-4 text-lg font-semibold dark:text-white">Choose your deployment platform</h2>
 				<div class="space-y-2">
 					{#each deploymentPlatforms as platform}
-						<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50 dark:hover:bg-gray-700">
+						<label
+							class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50 dark:hover:bg-gray-700"
+						>
 							<input
 								type="radio"
 								name="deployment"
@@ -325,7 +342,8 @@
 				</div>
 			</div>
 		{:else}
-			<div in:fade
+			<div
+				in:fade
 				on:introend={() => {
 					if (typeof window !== 'undefined') {
 						Prism.highlightAll();
@@ -333,7 +351,9 @@
 				}}
 			>
 				<h2 class="mb-4 text-lg font-semibold dark:text-white">Setup Instructions</h2>
-				<div class="relative rounded-lg bg-gray-900 p-4 text-gray-100 [&_.token.comment]:text-gray-400 [&_.token.function]:text-blue-400 [&_.token.operator]:text-gray-300 [&_.token.punctuation]:text-gray-300 [&_.token.string]:text-emerald-300 [&_.token.command]:text-blue-300">
+				<div
+					class="relative rounded-lg bg-gray-900 p-4 text-gray-100 [&_.token.command]:text-blue-300 [&_.token.comment]:text-gray-400 [&_.token.function]:text-blue-400 [&_.token.operator]:text-gray-300 [&_.token.punctuation]:text-gray-300 [&_.token.string]:text-emerald-300"
+				>
 					<button
 						on:click={() => {
 							const text = getSetupInstructions().join('\n');
@@ -343,7 +363,9 @@
 					>
 						Copy
 					</button>
-					<pre class="whitespace-pre-wrap font-mono text-sm"><code class="language-bash">{getSetupInstructions().join('\n')}</code></pre>
+					<pre class="whitespace-pre-wrap font-mono text-sm"><code class="language-bash"
+							>{getSetupInstructions().join('\n')}</code
+						></pre>
 				</div>
 				<div class="mt-4 space-y-4">
 					<div class="flex items-center justify-between">
@@ -387,8 +409,12 @@
 								class="inline-flex items-center rounded-md bg-gray-50 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
 							>
 								<svg class="mr-1.5 h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
-									<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>
-									<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>
+									<path
+										d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"
+									/>
+									<path
+										d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"
+									/>
 								</svg>
 								Copy URL
 							</button>
@@ -396,7 +422,9 @@
 					</div>
 				</div>
 				<div class="mt-6 border-t border-gray-200 pt-4 dark:border-gray-700">
-					<h3 class="text-sm font-medium text-gray-900 dark:text-white">Found an issue with these instructions?</h3>
+					<h3 class="text-sm font-medium text-gray-900 dark:text-white">
+						Found an issue with these instructions?
+					</h3>
 					<div class="mt-3 flex space-x-4">
 						<a
 							href={`https://github.com/narthur/codebuff-tricks/issues/new?title=${encodeURIComponent(
@@ -429,7 +457,9 @@ Issue Description:
 							class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
 						>
 							<svg class="mr-2 h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
-								<path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z"/>
+								<path
+									d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z"
+								/>
 							</svg>
 							Report an issue
 						</a>
@@ -440,13 +470,17 @@ Issue Description:
 							class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
 						>
 							<svg class="mr-2 h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
-								<path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"/>
+								<path
+									fill-rule="evenodd"
+									d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"
+								/>
 							</svg>
 							Fork and contribute
 						</a>
 					</div>
 					<p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-						Help us improve these instructions by reporting issues or submitting pull requests on GitHub.
+						Help us improve these instructions by reporting issues or submitting pull requests on
+						GitHub.
 					</p>
 				</div>
 			</div>
@@ -485,7 +519,9 @@ Issue Description:
 					class="inline-flex items-center rounded-md bg-[#FF5E5B] px-4 py-2 text-sm font-medium text-white hover:bg-[#ff4542] focus:outline-none focus:ring-2 focus:ring-[#FF5E5B] focus:ring-offset-2"
 				>
 					<svg class="mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-						<path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/>
+						<path
+							d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"
+						/>
 					</svg>
 					Buy me a coffee
 				</a>
@@ -495,8 +531,14 @@ Issue Description:
 					rel="noopener noreferrer"
 					class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:focus:ring-offset-gray-900"
 				>
-					<svg class="mr-2 h-5 w-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M12 4L4 8l8 4 8-4-8-4zM4 12l8 4 8-4M4 16l8 4 8-4"/>
+					<svg
+						class="mr-2 h-5 w-5 text-blue-600"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<path d="M12 4L4 8l8 4 8-4-8-4zM4 12l8 4 8-4M4 16l8 4 8-4" />
 					</svg>
 					Try Codebuff with my referral
 				</a>
@@ -504,22 +546,45 @@ Issue Description:
 		</div>
 	</div>
 
-	<footer class="mx-auto mt-16 max-w-3xl px-4 pb-8 text-center text-sm text-gray-500 dark:text-gray-400">
+	<footer
+		class="mx-auto mt-16 max-w-3xl px-4 pb-8 text-center text-sm text-gray-500 dark:text-gray-400"
+	>
 		<div class="space-x-4">
-			<a href="https://nathanarthur.com" class="hover:text-gray-700 dark:hover:text-gray-200">Nathan Arthur</a>
+			<a href="https://nathanarthur.com" class="hover:text-gray-700 dark:hover:text-gray-200"
+				>Nathan Arthur</a
+			>
 			<span>•</span>
-			<a href="https://pinepeakdigital.com" class="hover:text-gray-700 dark:hover:text-gray-200">Pine Peak Digital</a>
+			<a href="https://pinepeakdigital.com" class="hover:text-gray-700 dark:hover:text-gray-200"
+				>Pine Peak Digital</a
+			>
 			<span>•</span>
-			<a href="https://ko-fi.com/narthur" class="hover:text-gray-700 dark:hover:text-gray-200">Ko-fi</a>
+			<a href="https://ko-fi.com/narthur" class="hover:text-gray-700 dark:hover:text-gray-200"
+				>Ko-fi</a
+			>
 			<span>•</span>
-			<a href="https://taskratchet.com" class="hover:text-gray-700 dark:hover:text-gray-200">TaskRatchet</a>
+			<a href="https://taskratchet.com" class="hover:text-gray-700 dark:hover:text-gray-200"
+				>TaskRatchet</a
+			>
 			<span>•</span>
-			<a href="https://github.com/narthur/codebuff-tricks" class="hover:text-gray-700 dark:hover:text-gray-200">GitHub</a>
+			<a
+				href="https://github.com/narthur/codebuff-tricks"
+				class="hover:text-gray-700 dark:hover:text-gray-200">GitHub</a
+			>
 			<span>•</span>
-			<a href="https://codebuff.com/referrals/ref-6d348d54-80f1-4155-903b-2cc6c57dd12f" class="hover:text-gray-700 dark:hover:text-gray-200">Try Codebuff</a>
+			<a
+				href="https://codebuff.com/referrals/ref-6d348d54-80f1-4155-903b-2cc6c57dd12f"
+				class="hover:text-gray-700 dark:hover:text-gray-200">Try Codebuff</a
+			>
 		</div>
 		<p class="mt-4">
-			Built by <a href="https://nathanarthur.com" class="hover:text-gray-700 dark:hover:text-gray-200">Nathan Arthur</a> at <a href="https://pinepeakdigital.com" class="hover:text-gray-700 dark:hover:text-gray-200">Pine Peak Digital</a>
+			Built by <a
+				href="https://nathanarthur.com"
+				class="hover:text-gray-700 dark:hover:text-gray-200">Nathan Arthur</a
+			>
+			at
+			<a href="https://pinepeakdigital.com" class="hover:text-gray-700 dark:hover:text-gray-200"
+				>Pine Peak Digital</a
+			>
 		</p>
 	</footer>
 </div>
