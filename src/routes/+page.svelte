@@ -1,6 +1,10 @@
 <script lang="ts">
 	import type { PackageManager, Framework, SetupConfig, DeploymentPlatform } from '$lib/types';
 	import { fade } from 'svelte/transition';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
+
 	let currentStep = 0;
 	let config: SetupConfig = {
 		packageManager: 'npm',
@@ -8,6 +12,43 @@
 		typescript: true,
 		deployment: 'render'
 	};
+
+	// Load state from URL on mount
+	onMount(() => {
+		const params = new URLSearchParams($page.url.search);
+		const step = parseInt(params.get('step') || '0');
+		const pm = params.get('pm');
+		const fw = params.get('fw');
+		const ts = params.get('ts');
+		const deploy = params.get('deploy');
+
+		if (pm && packageManagers.includes(pm as PackageManager)) {
+			config.packageManager = pm as PackageManager;
+		}
+		if (fw && frameworks.includes(fw as Framework)) {
+			config.framework = fw as Framework;
+		}
+		if (ts !== null) {
+			config.typescript = ts === 'true';
+		}
+		if (deploy && deploymentPlatforms.includes(deploy as DeploymentPlatform)) {
+			config.deployment = deploy as DeploymentPlatform;
+		}
+		if (step >= 0 && step <= 4) {
+			currentStep = step;
+		}
+	});
+
+	// Update URL when state changes
+	$: {
+		const params = new URLSearchParams();
+		params.set('step', currentStep.toString());
+		params.set('pm', config.packageManager);
+		params.set('fw', config.framework);
+		params.set('ts', config.typescript.toString());
+		params.set('deploy', config.deployment);
+		goto(`?${params.toString()}`, { replaceState: true, keepfocus: true });
+	}
 
 	const deploymentPlatforms: DeploymentPlatform[] = [
 		'vercel',
@@ -320,7 +361,12 @@
 							href={`https://github.com/narthur/codebuff-tricks/issues/new?title=${encodeURIComponent(
 								`Setup instructions issue for ${config.framework} with ${config.packageManager}`
 							)}&body=${encodeURIComponent(
-								`I found an issue with the setup instructions for the following configuration:
+								`I found an issue with the setup instructions for the following configuration.
+
+Configuration URL:
+${window.location.href}
+
+Configuration Details:
 
 Configuration:
 - Package Manager: ${config.packageManager}
