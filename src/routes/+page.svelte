@@ -303,7 +303,7 @@
 			<div in:fade>
 				<h2 class="mb-4 text-lg font-semibold dark:text-white">Use TypeScript?</h2>
 				<div class="space-y-2">
-					<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50">
+					<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50 dark:hover:bg-gray-700">
 						<input
 							type="radio"
 							name="typescript"
@@ -312,7 +312,7 @@
 							class="h-4 w-4 text-blue-600"
 						/> <span class="text-gray-900 dark:text-white">Yes</span>
 					</label>
-					<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50">
+					<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50 dark:hover:bg-gray-700">
 						<input
 							type="radio"
 							name="typescript"
