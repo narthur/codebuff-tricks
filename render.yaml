@@ -11,6 +11,12 @@ services:
       - path: /*
         name: Cache-Control
         value: no-cache
+      - path: /_app/immutable/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*.js
+        name: Content-Type
+        value: application/javascript
     routes:
       - type: rewrite
         source: /*
