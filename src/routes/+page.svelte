@@ -9,7 +9,13 @@
 		deployment: 'render'
 	};
 
-	const deploymentPlatforms: DeploymentPlatform[] = ['vercel', 'netlify', 'render', 'cloudflare', 'github-pages'];
+	const deploymentPlatforms: DeploymentPlatform[] = [
+		'vercel',
+		'netlify',
+		'render',
+		'cloudflare',
+		'github-pages'
+	];
 
 	const packageManagers: PackageManager[] = ['npm', 'pnpm', 'yarn', 'bun'];
 	const frameworks: Framework[] = [
@@ -95,63 +101,87 @@
 						`${config.packageManager} ${config.packageManager === 'npm' ? 'install -g' : 'add -g'} vercel`,
 						'# Deploy to Vercel',
 						'vercel'
-				]
+					]
 				: config.deployment === 'render'
-				? [
-						'# Visit render.com and create a new Web Service',
-						'# Connect your GitHub repository',
-						'# Build Command: ' +
-							(config.framework === 'nextjs'
-								? 'npm run build'
-								: config.framework === 'sveltekit'
+					? [
+							'# Visit render.com and create a new Web Service',
+							'# Connect your GitHub repository',
+							'# Build Command: ' +
+								(config.framework === 'nextjs'
 									? 'npm run build'
-									: 'npm run build'),
-						'# Start Command: ' +
-							(config.framework === 'nextjs'
-								? 'npm start'
-								: config.framework === 'sveltekit'
-									? 'node build'
-									: 'npm run preview'),
-						'# Auto-deploy on git push'
-					]
-				: config.deployment === 'netlify'
-				? [
-						'# Install Netlify CLI',
-						`${config.packageManager} ${config.packageManager === 'npm' ? 'install -g' : 'add -g'} netlify-cli`,
-						'# Initialize Netlify',
-						'netlify init',
-						'# Deploy to Netlify',
-						'netlify deploy --prod'
-					]
-				: config.deployment === 'cloudflare'
-				? [
-						'# Install Cloudflare Pages via Wrangler',
-						`${config.packageManager} ${config.packageManager === 'npm' ? 'install -g' : 'add -g'} wrangler`,
-						'# Login to Cloudflare',
-						'wrangler login',
-						'# Deploy to Cloudflare Pages',
-						'wrangler pages deploy dist'
-					]
-				: [
-						'# Configure GitHub Pages in your repository settings',
-						'# Add deploy script to package.json:',
-						'# "deploy": "gh-pages -d dist"',
-						'',
-						'# Install gh-pages package',
-						`${packageManager} ${packageManager === 'npm' ? 'install' : 'add'} -D gh-pages`,
-						'',
-						'# Build and deploy',
-						'npm run build',
-						'npm run deploy'
-					])
+									: config.framework === 'sveltekit'
+										? 'npm run build'
+										: 'npm run build'),
+							'# Start Command: ' +
+								(config.framework === 'nextjs'
+									? 'npm start'
+									: config.framework === 'sveltekit'
+										? 'node build'
+										: 'npm run preview'),
+							'# Auto-deploy on git push'
+						]
+					: config.deployment === 'netlify'
+						? [
+								'# Install Netlify CLI',
+								`${config.packageManager} ${config.packageManager === 'npm' ? 'install -g' : 'add -g'} netlify-cli`,
+								'# Initialize Netlify',
+								'netlify init',
+								'# Deploy to Netlify',
+								'netlify deploy --prod'
+							]
+						: config.deployment === 'cloudflare'
+							? [
+									'# Install Cloudflare Pages via Wrangler',
+									`${config.packageManager} ${config.packageManager === 'npm' ? 'install -g' : 'add -g'} wrangler`,
+									'# Login to Cloudflare',
+									'wrangler login',
+									'# Deploy to Cloudflare Pages',
+									'wrangler pages deploy dist'
+								]
+							: [
+									'# Configure GitHub Pages in your repository settings',
+									'# Add deploy script to package.json:',
+									'# "deploy": "gh-pages -d dist"',
+									'',
+									'# Install gh-pages package',
+									`${packageManager} ${packageManager === 'npm' ? 'install' : 'add'} -D gh-pages`,
+									'',
+									'# Build and deploy',
+									'npm run build',
+									'npm run deploy'
+								])
 		];
 	}
 </script>
 
-<div class="min-h-screen bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-gray-100 px-4 py-8 sm:px-6 lg:px-8">
+	<div class="mx-auto mb-12 max-w-3xl text-center">
+		<h1 class="mb-4 flex items-center justify-center text-4xl font-bold text-gray-900">
+			Get Started with <img src="/codebuff-logo.svg" alt="Codebuff" class="ml-5 inline h-16" />
+		</h1>
+		<div class="mb-6">
+			<span
+				class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20"
+			>
+				Unofficial Tool
+			</span>
+		</div>
+		<p class="mx-auto max-w-2xl text-lg text-gray-600">
+			A community-built wizard to help you set up new projects with Codebuff. Choose your tech
+			stack, and get the exact commands needed to start coding with AI assistance.
+		</p>
+		<p class="mt-2 text-sm text-gray-500">
+			This is an unofficial tool created by me, <a
+				href="https://nathanarthur.com"
+				class="text-blue-600 hover:underline">Nathan Arthur</a
+			>. Visit <a href="https://codebuff.com" class="text-blue-600 hover:underline">codebuff.com</a>
+			for the official documentation.
+		</p>
+	</div>
+
 	<div class="mx-auto max-w-md overflow-hidden rounded-xl bg-white p-6 shadow-md md:max-w-2xl">
 		<div class="mb-8">
-			<h1 class="mb-2 text-2xl font-bold text-gray-900">Project Setup Wizard</h1>
+			<h2 class="mb-2 text-2xl font-bold text-gray-900">Project Setup</h2>
 			<div class="flex justify-between text-sm text-gray-500">
 				<span>Step {currentStep + 1} of 5</span>
 				<span>{Math.round(((currentStep + 1) / 5) * 100)}% complete</span>
@@ -289,7 +319,7 @@
 		<div class="mt-8 flex justify-between">
 			<button
 				on:click={prevStep}
-				class="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
+				class="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
 				disabled={currentStep === 0}
 			>
 				Previous
