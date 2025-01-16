@@ -1,42 +1,34 @@
 ---
+type PackageManager = 'npm' | 'pnpm' | 'yarn';
+type Framework = 'Astro' | 'SvelteKit' | 'Vite';
+
 const frameworks = [
 	{
 		name: 'Astro',
-		command: 'npm create astro@latest',
 		description: 'A modern static site builder with excellent performance and developer experience.',
-		steps: [
-			'Run the command in your terminal',
-			'Follow the CLI prompts to name your project and choose a template',
-			'Navigate to your project directory',
-			'Run npm install (or pnpm install, or yarn) to install dependencies',
-			'Start the development server with npm run dev'
-		]
+		commands: {
+			npm: 'npm create astro@latest',
+			pnpm: 'pnpm create astro@latest',
+			yarn: 'yarn create astro'
+		}
 	},
 	{
 		name: 'SvelteKit',
-		command: 'npm create svelte@latest my-app',
 		description: 'The official application framework for Svelte, with powerful features out of the box.',
-		steps: [
-			'Run the command in your terminal',
-			'Follow the CLI prompts to configure your project',
-			'Navigate to your project directory',
-			'Run npm install (or pnpm install, or yarn) to install dependencies',
-			'Start the development server with npm run dev'
-		]
+		commands: {
+			npm: 'npm create svelte@latest my-app',
+			pnpm: 'pnpm create svelte@latest my-app',
+			yarn: 'yarn create svelte my-app'
+		}
 	},
 	{
 		name: 'Vite',
-		command: 'npm create vite@latest',
 		description: 'A modern frontend build tool that offers a faster and leaner development experience.',
-		steps: [
-			'Run the command in your terminal',
-			'Choose a project name',
-			'Select your preferred framework',
-			'Choose a variant (JavaScript/TypeScript)',
-			'Navigate to your project directory',
-			'Run npm install (or pnpm install, or yarn) to install dependencies',
-			'Start the development server with npm run dev'
-		]
+		commands: {
+			npm: 'npm create vite@latest',
+			pnpm: 'pnpm create vite@latest',
+			yarn: 'yarn create vite'
+		}
 	}
 ];
 ---
@@ -44,32 +36,106 @@ const frameworks = [
 <div class="container">
 	<h1>Codebuff Tricks</h1>
 	<p class="intro">
-		Quick guides to initialize new projects with popular frameworks. Choose your preferred stack and get
+		Quick guides to initialize new projects with popular frameworks. Choose your preferences and get
 		started in minutes.
 	</p>
 
-	<div class="tutorials">
-		{
-			frameworks.map((framework) => (
-				<article class="tutorial-card">
-					<h2>{framework.name}</h2>
-					<p>{framework.description}</p>
-					
-					<div class="command-block">
-						<pre><code>{framework.command}</code></pre>
-					</div>
+	<form id="setup-form" class="setup-form">
+		<div class="form-group">
+			<label for="package-manager">Package Manager:</label>
+			<select id="package-manager" name="package-manager">
+				<option value="npm">npm</option>
+				<option value="pnpm">pnpm</option>
+				<option value="yarn">yarn</option>
+			</select>
+		</div>
 
-					<h3>Steps:</h3>
-					<ol>
-						{framework.steps.map((step) => (
-							<li>{step}</li>
-						))}
-					</ol>
-				</article>
-			))
-		}
+		<div class="form-group">
+			<label for="framework">Framework:</label>
+			<select id="framework" name="framework">
+				{frameworks.map(framework => (
+					<option value={framework.name}>{framework.name}</option>
+				))}
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label>
+				<input type="checkbox" id="use-typescript" name="use-typescript" checked>
+				Use TypeScript
+			</label>
+		</div>
+	</form>
+
+	<div id="setup-instructions" class="setup-instructions">
+		<h2>Setup Instructions</h2>
+		<div id="framework-info"></div>
+		
+		<h3>Steps:</h3>
+		<ol id="steps-list"></ol>
+
+		<div class="codebuff-setup">
+			<h3>Setting up Codebuff</h3>
+			<p>Install Codebuff globally:</p>
+			<pre><code id="codebuff-install"></code></pre>
+			
+			<p>Start Codebuff in your project directory:</p>
+			<pre><code>codebuff</code></pre>
+			
+			<p>Or use different modes:</p>
+			<pre><code>codebuff --lite  # Economy mode
+codebuff --max   # Premium mode</code></pre>
+		</div>
 	</div>
 </div>
+
+<script>
+	function updateInstructions() {
+		const packageManager = (document.getElementById('package-manager') as HTMLSelectElement).value as 'npm' | 'pnpm' | 'yarn';
+		const frameworkName = (document.getElementById('framework') as HTMLSelectElement).value;
+		const useTypeScript = (document.getElementById('use-typescript') as HTMLInputElement).checked;
+		
+		const framework = frameworks.find(f => f.name === frameworkName);
+		if (!framework) return;
+
+		const frameworkInfo = document.getElementById('framework-info');
+		if (frameworkInfo) {
+			frameworkInfo.innerHTML = `
+				<h3>${framework.name}</h3>
+				<p>${framework.description}</p>
+				<div class="command-block">
+					<pre><code>${framework.commands[packageManager]}</code></pre>
+				</div>
+			`;
+		}
+
+		const stepsList = document.getElementById('steps-list');
+		if (stepsList) {
+			const steps = [
+				`Run the command in your terminal`,
+				`Follow the CLI prompts to name your project${useTypeScript ? ' and select TypeScript' : ''}`,
+				`Navigate to your project directory`,
+				`Run ${packageManager} install to install dependencies`,
+				`Start the development server with ${packageManager} run dev`
+			];
+
+			stepsList.innerHTML = steps.map(step => `<li>${step}</li>`).join('');
+		}
+
+		const codebuffInstall = document.getElementById('codebuff-install');
+		if (codebuffInstall) {
+			codebuffInstall.textContent = `${packageManager} ${packageManager === 'npm' ? 'install -g' : 'add -g'} codebuff`;
+		}
+	}
+
+	// Add event listeners
+	document.getElementById('package-manager')?.addEventListener('change', updateInstructions);
+	document.getElementById('framework')?.addEventListener('change', updateInstructions);
+	document.getElementById('use-typescript')?.addEventListener('change', updateInstructions);
+
+	// Initial update
+	updateInstructions();
+</script>
 
 <style>
 	.container {
@@ -90,22 +156,41 @@ const frameworks = [
 		margin-bottom: 3rem;
 	}
 
-	.tutorials {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 2rem;
-	}
-
-	.tutorial-card {
+	.setup-form {
 		background: white;
 		border-radius: 1rem;
 		padding: 2rem;
 		box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+		margin-bottom: 2rem;
 	}
 
-	.tutorial-card h2 {
-		color: #2563eb;
-		margin-top: 0;
+	.form-group {
+		margin-bottom: 1.5rem;
+	}
+
+	.form-group label {
+		display: block;
+		margin-bottom: 0.5rem;
+		font-weight: 500;
+	}
+
+	select, input[type="checkbox"] {
+		margin-right: 0.5rem;
+	}
+
+	select {
+		padding: 0.5rem;
+		border-radius: 0.375rem;
+		border: 1px solid #d1d5db;
+		width: 100%;
+		max-width: 300px;
+	}
+
+	.setup-instructions {
+		background: white;
+		border-radius: 1rem;
+		padding: 2rem;
+		box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 	}
 
 	.command-block {
@@ -116,6 +201,9 @@ const frameworks = [
 		margin: 0;
 		background-color: #1e293b;
 		color: #e2e8f0;
+		padding: 1rem;
+		border-radius: 0.5rem;
+		overflow-x: auto;
 	}
 
 	ol {
@@ -124,6 +212,12 @@ const frameworks = [
 
 	li {
 		margin-bottom: 0.5rem;
+	}
+
+	.codebuff-setup {
+		margin-top: 2rem;
+		padding-top: 2rem;
+		border-top: 1px solid #e5e7eb;
 	}
 
 	@media (max-width: 768px) {
