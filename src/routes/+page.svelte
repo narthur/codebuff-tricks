@@ -3,16 +3,6 @@
 	import Prism from 'prismjs';
 	import 'prismjs/components/prism-bash';
 
-	// Remove any default Prism background
-	const style = document.createElement('style');
-	style.textContent = `
-		code[class*="language-"],
-		pre[class*="language-"] {
-			background: none;
-		}
-	`;
-	document.head.appendChild(style);
-
 	import { fade } from 'svelte/transition';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
@@ -29,6 +19,16 @@
 	// Load state from URL on mount (browser-only)
 	onMount(() => {
 		if (typeof window === 'undefined') return;
+		
+		// Remove any default Prism background
+		const style = document.createElement('style');
+		style.textContent = `
+			code[class*="language-"],
+			pre[class*="language-"] {
+				background: none;
+			}
+		`;
+		document.head.appendChild(style);
 		const params = new URLSearchParams($page.url.search);
 		const step = parseInt(params.get('step') || '0');
 		const pm = params.get('pm');
@@ -209,10 +209,10 @@
 	}
 </script>
 
-<div class="min-h-screen bg-gray-100 px-4 py-8 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-gray-100 px-4 py-8 dark:bg-gray-900 sm:px-6 lg:px-8">
 	<div class="mx-auto mb-12 max-w-3xl text-center">
-		<h1 class="mb-4 flex items-center justify-center text-4xl font-bold text-gray-900">
-			Get Started with <img src="/codebuff-logo.svg" alt="Codebuff" class="ml-5 inline h-16" />
+		<h1 class="mb-4 flex items-center justify-center text-4xl font-bold text-gray-900 dark:text-white">
+			Get Started with <img src="/codebuff-logo.svg" alt="Codebuff" class="ml-5 inline h-16 dark:invert dark:grayscale" />
 		</h1>
 		<div class="mb-6">
 			<span
@@ -221,11 +221,11 @@
 				Unofficial Tool
 			</span>
 		</div>
-		<p class="mx-auto max-w-2xl text-lg text-gray-600">
+		<p class="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
 			A community-built wizard to help you set up new projects with Codebuff. Choose your tech
 			stack, and get the exact commands needed to start coding with AI assistance.
 		</p>
-		<p class="mt-2 text-sm text-gray-500">
+		<p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
 			This is an unofficial tool created by me, <a
 				href="https://nathanarthur.com"
 				class="text-blue-600 hover:underline">Nathan Arthur</a
@@ -234,16 +234,14 @@
 		</p>
 	</div>
 
-	<div class="mx-auto max-w-md overflow-hidden rounded-xl bg-white p-6 shadow-md md:max-w-2xl">
+	<div class="mx-auto max-w-md overflow-hidden rounded-xl bg-white p-6 shadow-md dark:bg-gray-800 dark:shadow-gray-900/30 md:max-w-2xl">
 		<div class="mb-8">
-			<h2 class="mb-2 text-2xl font-bold text-gray-900">Project Setup</h2>
-			<div class="flex justify-between text-sm text-gray-500">
+			<h2 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white">Project Setup</h2>
+			<div class="flex justify-between text-sm text-gray-500 dark:text-gray-400">
 				<span>Step {currentStep + 1} of 5</span>
 				<span>{Math.round(((currentStep + 1) / 5) * 100)}% complete</span>
-			</div>
-			<div class="mt-2 h-2 w-full rounded-full bg-gray-200">
-				<div
-					class="h-2 rounded-full bg-blue-600 transition-all duration-300"
+			</div>				<div class="mt-2 h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
+					<div class="h-2 rounded-full bg-blue-600 transition-all duration-300 dark:bg-blue-500"
 					style="width: {((currentStep + 1) / 5) * 100}%"
 				></div>
 			</div>
@@ -251,10 +249,9 @@
 
 		{#if currentStep === 0}
 			<div in:fade>
-				<h2 class="mb-4 text-lg font-semibold">Choose your package manager</h2>
+				<h2 class="mb-4 text-lg font-semibold dark:text-white">Choose your package manager</h2>
 				<div class="space-y-2">
-					{#each packageManagers as pm}
-						<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50">
+					{#each packageManagers as pm}            <label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50 dark:hover:bg-gray-700">
 							<input
 								type="radio"
 								name="packageManager"
@@ -262,17 +259,17 @@
 								bind:group={config.packageManager}
 								class="h-4 w-4 text-blue-600"
 							/>
-							<span class="text-gray-900">{pm}</span>
+							<span class="text-gray-900 dark:text-white">{pm}</span>
 						</label>
 					{/each}
 				</div>
 			</div>
 		{:else if currentStep === 1}
 			<div in:fade>
-				<h2 class="mb-4 text-lg font-semibold">Choose your framework</h2>
+				<h2 class="mb-4 text-lg font-semibold dark:text-white">Choose your framework</h2>
 				<div class="space-y-2">
 					{#each frameworks as fw}
-						<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50">
+						<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50 dark:hover:bg-gray-700">
 							<input
 								type="radio"
 								name="framework"
@@ -280,14 +277,14 @@
 								bind:group={config.framework}
 								class="h-4 w-4 text-blue-600"
 							/>
-							<span class="text-gray-900">{fw}</span>
+							<span class="text-gray-900 dark:text-white">{fw}</span>
 						</label>
 					{/each}
 				</div>
 			</div>
 		{:else if currentStep === 2}
 			<div in:fade>
-				<h2 class="mb-4 text-lg font-semibold">Use TypeScript?</h2>
+				<h2 class="mb-4 text-lg font-semibold dark:text-white">Use TypeScript?</h2>
 				<div class="space-y-2">
 					<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50">
 						<input
@@ -296,8 +293,7 @@
 							bind:group={config.typescript}
 							value={true}
 							class="h-4 w-4 text-blue-600"
-						/>
-						<span class="text-gray-900">Yes</span>
+						/>							<span class="text-gray-900 dark:text-white">Yes</span>
 					</label>
 					<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50">
 						<input
@@ -306,17 +302,16 @@
 							bind:group={config.typescript}
 							value={false}
 							class="h-4 w-4 text-blue-600"
-						/>
-						<span class="text-gray-900">No</span>
+						/>							<span class="text-gray-900 dark:text-white">No</span>
 					</label>
 				</div>
 			</div>
 		{:else if currentStep === 3}
 			<div in:fade>
-				<h2 class="mb-4 text-lg font-semibold">Choose your deployment platform</h2>
+				<h2 class="mb-4 text-lg font-semibold dark:text-white">Choose your deployment platform</h2>
 				<div class="space-y-2">
 					{#each deploymentPlatforms as platform}
-						<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50">
+						<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50 dark:hover:bg-gray-700">
 							<input
 								type="radio"
 								name="deployment"
@@ -324,7 +319,7 @@
 								bind:group={config.deployment}
 								class="h-4 w-4 text-blue-600"
 							/>
-							<span class="capitalize text-gray-900">{platform}</span>
+							<span class="capitalize text-gray-900 dark:text-white">{platform}</span>
 						</label>
 					{/each}
 				</div>
@@ -337,7 +332,7 @@
 					}
 				}}
 			>
-				<h2 class="mb-4 text-lg font-semibold">Setup Instructions</h2>
+				<h2 class="mb-4 text-lg font-semibold dark:text-white">Setup Instructions</h2>
 				<div class="relative rounded-lg bg-gray-900 p-4 text-gray-100 [&_.token.comment]:text-gray-400 [&_.token.function]:text-blue-400 [&_.token.operator]:text-gray-300 [&_.token.punctuation]:text-gray-300 [&_.token.string]:text-emerald-300 [&_.token.command]:text-blue-300">
 					<button
 						on:click={() => {
@@ -352,7 +347,7 @@
 				</div>
 				<div class="mt-4 space-y-4">
 					<div class="flex items-center justify-between">
-						<p class="text-sm text-gray-600">
+						<p class="text-sm text-gray-600 dark:text-gray-300">
 							Copy these commands to set up your new project with Codebuff!
 						</p>
 						<button
@@ -375,7 +370,7 @@
 					</div>
 
 					<div class="rounded-lg border border-gray-200 p-4">
-						<p class="mb-3 text-sm text-gray-600">
+						<p class="mb-3 text-sm text-gray-600 dark:text-gray-300">
 							Share these instructions with others:
 						</p>
 						<div class="flex items-center space-x-2">
@@ -383,7 +378,7 @@
 								type="text"
 								readonly
 								value={window.location.href}
-								class="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-600"
+								class="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
 							/>
 							<button
 								on:click={() => {
@@ -401,7 +396,7 @@
 					</div>
 				</div>
 				<div class="mt-6 border-t border-gray-200 pt-4">
-					<h3 class="text-sm font-medium text-gray-900">Found an issue with these instructions?</h3>
+					<h3 class="text-sm font-medium text-gray-900 dark:text-white">Found an issue with these instructions?</h3>
 					<div class="mt-3 flex space-x-4">
 						<a
 							href={`https://github.com/narthur/codebuff-tricks/issues/new?title=${encodeURIComponent(
@@ -450,7 +445,7 @@ Issue Description:
 							Fork and contribute
 						</a>
 					</div>
-					<p class="mt-2 text-xs text-gray-500">
+					<p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
 						Help us improve these instructions by reporting issues or submitting pull requests on GitHub.
 					</p>
 				</div>
@@ -460,7 +455,7 @@ Issue Description:
 		<div class="mt-8 flex justify-between">
 			<button
 				on:click={prevStep}
-				class="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
+				class="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:disabled:hover:bg-gray-700"
 				disabled={currentStep === 0}
 			>
 				Previous
@@ -477,9 +472,9 @@ Issue Description:
 	</div>
 
 	<div class="mx-auto mt-12 max-w-3xl text-center">
-		<div class="rounded-lg bg-white p-6 shadow-sm">
-			<h2 class="mb-4 text-lg font-semibold text-gray-900">Support This Project</h2>
-			<p class="mb-6 text-gray-600">
+		<div class="rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800 dark:shadow-gray-900/30">
+			<h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Support This Project</h2>
+			<p class="mb-6 text-gray-600 dark:text-gray-300">
 				If you found this tool helpful, you can support its development in these ways:
 			</p>
 			<div class="flex justify-center space-x-4">
@@ -498,7 +493,7 @@ Issue Description:
 					href="https://codebuff.com/referrals/ref-6d348d54-80f1-4155-903b-2cc6c57dd12f"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+					class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:focus:ring-offset-gray-900"
 				>
 					<svg class="mr-2 h-5 w-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<path d="M12 4L4 8l8 4 8-4-8-4zM4 12l8 4 8-4M4 16l8 4 8-4"/>
