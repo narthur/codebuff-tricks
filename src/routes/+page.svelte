@@ -126,7 +126,7 @@
 								? `${createCmd} solid@latest my-app ${typescript ? '--typescript' : ''}`
 								: framework === 'nextjs'
 									? `${createCmd} next@latest my-app ${typescript ? '--typescript' : ''}`
-									: `${createCmd} create-svelte@latest my-app ${typescript ? '--typescript' : ''}`;
+									: `npx sv create my-app ${typescript ? '--typescript' : ''}`;
 
 		return [
 			'# Install Codebuff globally',
@@ -173,7 +173,7 @@
 								(config.framework === 'nextjs'
 									? 'npm start'
 									: config.framework === 'sveltekit'
-										? 'node build'
+										? 'npm run preview'
 										: 'npm run preview'),
 							'# Auto-deploy on git push'
 						]

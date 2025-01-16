@@ -1,19 +1,13 @@
-# SvelteKit Static Site Configuration
+# Framework Setup Commands
 
-## Deployment
-- Using `@sveltejs/adapter-static` for static site generation
-- All routes must rewrite to index.html to support client-side routing
-- For Render.com deployment:
-  - Use proper MIME types for JavaScript files
-  - Configure caching for immutable assets
-  - Ensure proper handling of static assets
-  - Keep `source: /*` pattern in render.yaml for route rewrites
+## SvelteKit
+- Use `npx sv create my-app` for project creation
+- Default dev server runs on localhost:5173
+- Use `npm run preview` as the start command for production preview
+- Each page is a Svelte component in src/routes directory
+- Server-rendered by default for fast initial load
 
-## Development
-- Run `npm run dev` for local development
-- Run `npm run build` followed by `npm run preview` to test production build locally
-
-## Common Issues
-- JavaScript module loading issues can be fixed by proper MIME type configuration
-- Static assets should be properly cached with immutable cache headers for /_app/immutable/*
-- SPA routing requires proper fallback configuration in both adapter and hosting platform
+## Deployment Platforms
+- Render.com: Use npm run preview as start command
+- Static adapter requires proper SPA fallback configuration
+- All routes must rewrite to index.html
