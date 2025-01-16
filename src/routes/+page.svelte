@@ -62,6 +62,8 @@
 		params.set('ts', config.typescript.toString());
 		params.set('deploy', config.deployment);
 		goto(`?${params.toString()}`, { replaceState: true, keepFocus: true });
+	} else {
+		console.log('window is undefined; skipping URL update');
 	}
 
 	const deploymentPlatforms: DeploymentPlatform[] = [
