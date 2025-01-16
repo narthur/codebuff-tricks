@@ -1,14 +1,15 @@
 <script lang="ts">
-	import type { PackageManager, Framework, SetupConfig } from '$lib/types';
-	import { fade } from 'svelte/transition';  let currentStep = 0;
-  let config: SetupConfig = {
-    packageManager: 'npm',
-    framework: 'react',
-    typescript: true,
-    deployment: 'render'
-  };
+	import type { PackageManager, Framework, SetupConfig, DeploymentPlatform } from '$lib/types';
+	import { fade } from 'svelte/transition';
+	let currentStep = 0;
+	let config: SetupConfig = {
+		packageManager: 'npm',
+		framework: 'react',
+		typescript: true,
+		deployment: 'render'
+	};
 
-  const deploymentPlatforms: DeploymentPlatform[] = ['render', 'netlify'];
+	const deploymentPlatforms: DeploymentPlatform[] = ['render', 'netlify'];
 
 	const packageManagers: PackageManager[] = ['npm', 'pnpm', 'yarn', 'bun'];
 	const frameworks: Framework[] = [
@@ -21,7 +22,8 @@
 		'sveltekit'
 	];
 
-	function nextStep() {    if (currentStep < 4) currentStep++;
+	function nextStep() {
+		if (currentStep < 4) currentStep++;
 	}
 
 	function prevStep() {
@@ -87,24 +89,32 @@
 			'git commit -m "Initial commit"',
 			'',
 			'# Deploy to ' + config.deployment,
-			...(config.deployment === 'render' ? [
-				'# Visit render.com and create a new Web Service',
-				'# Connect your GitHub repository',
-				'# Build Command: ' + (config.framework === 'nextjs' ? 'npm run build' : 
-								  config.framework === 'sveltekit' ? 'npm run build' : 
-								  'npm run build'),
-				'# Start Command: ' + (config.framework === 'nextjs' ? 'npm start' :
-								  config.framework === 'sveltekit' ? 'node build' :
-								  'npm run preview'),
-				'# Auto-deploy on git push'
-			] : [
-				'# Install Netlify CLI',
-				`${config.packageManager} ${config.packageManager === 'npm' ? 'install -g' : 'add -g'} netlify-cli`,
-				'# Initialize Netlify',
-				'netlify init',
-				'# Deploy to Netlify',
-				'netlify deploy --prod'
-			])
+			...(config.deployment === 'render'
+				? [
+						'# Visit render.com and create a new Web Service',
+						'# Connect your GitHub repository',
+						'# Build Command: ' +
+							(config.framework === 'nextjs'
+								? 'npm run build'
+								: config.framework === 'sveltekit'
+									? 'npm run build'
+									: 'npm run build'),
+						'# Start Command: ' +
+							(config.framework === 'nextjs'
+								? 'npm start'
+								: config.framework === 'sveltekit'
+									? 'node build'
+									: 'npm run preview'),
+						'# Auto-deploy on git push'
+					]
+				: [
+						'# Install Netlify CLI',
+						`${config.packageManager} ${config.packageManager === 'npm' ? 'install -g' : 'add -g'} netlify-cli`,
+						'# Initialize Netlify',
+						'netlify init',
+						'# Deploy to Netlify',
+						'netlify deploy --prod'
+					])
 		];
 	}
 </script>
@@ -186,40 +196,43 @@
 						<span class="text-gray-900">No</span>
 					</label>
 				</div>
-			</div>    {:else if currentStep === 3}
-      <div in:fade>
-        <h2 class="text-lg font-semibold mb-4">Choose your deployment platform</h2>
-        <div class="space-y-2">
-          {#each deploymentPlatforms as platform}
-            <label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50">
-              <input
-                type="radio"
-                name="deployment"
-                value={platform}
-                bind:group={config.deployment}
-                class="h-4 w-4 text-blue-600"
-              />
-              <span class="text-gray-900 capitalize">{platform}</span>
-            </label>
-          {/each}
-        </div>
-      </div>
-    {:else}
+			</div>
+		{:else if currentStep === 3}
+			<div in:fade>
+				<h2 class="mb-4 text-lg font-semibold">Choose your deployment platform</h2>
+				<div class="space-y-2">
+					{#each deploymentPlatforms as platform}
+						<label class="flex items-center space-x-3 rounded p-2 hover:bg-gray-50">
+							<input
+								type="radio"
+								name="deployment"
+								value={platform}
+								bind:group={config.deployment}
+								class="h-4 w-4 text-blue-600"
+							/>
+							<span class="capitalize text-gray-900">{platform}</span>
+						</label>
+					{/each}
+				</div>
+			</div>
+		{:else}
 			<div in:fade>
 				<h2 class="mb-4 text-lg font-semibold">Setup Instructions</h2>
-				<div class="rounded-lg bg-gray-900 p-4 text-gray-100 relative">
+				<div class="relative rounded-lg bg-gray-900 p-4 text-gray-100">
 					<button
 						on:click={() => {
 							const text = getSetupInstructions().join('\n');
 							navigator.clipboard.writeText(text);
 						}}
-						class="absolute top-2 right-2 px-2 py-1 text-xs bg-gray-700 hover:bg-gray-600 rounded"
+						class="absolute right-2 top-2 rounded bg-gray-700 px-2 py-1 text-xs hover:bg-gray-600"
 					>
 						Copy
 					</button>
-					<pre class="whitespace-pre-wrap font-mono text-sm">{getSetupInstructions().join('\n')}</pre>
+					<pre class="whitespace-pre-wrap font-mono text-sm">{getSetupInstructions().join(
+							'\n'
+						)}</pre>
 				</div>
-				<div class="mt-4 flex justify-between items-center">
+				<div class="mt-4 flex items-center justify-between">
 					<p class="text-sm text-gray-600">
 						Copy these commands to set up your new project with Codebuff!
 					</p>
@@ -236,7 +249,7 @@
 							document.body.removeChild(a);
 							URL.revokeObjectURL(url);
 						}}
-						class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+						class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
 					>
 						Download Script
 					</button>
